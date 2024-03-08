@@ -1,0 +1,146 @@
+Program.Sub.ScreenSU.Start
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!Con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass,1000000)
+
+F.ODBC.Connection!Con.OpenLocalRecordsetRO("rst","SELECT * FROM GCG_3736_INVCNG")
+F.Intrinsic.Control.If(V.ODBC.Con!rst.EOF,=,False)
+	F.ODBC.Con!rst.Close
+	'there is something in the table so check the changes and create the email
+	F.Intrinsic.Control.CallSub(Createemail)
+F.Intrinsic.Control.Else
+	F.ODBC.Con!rst.Close
+	'there is nothign in the table so add the information to the table because this is the first time.
+	F.Intrinsic.Control.CallSub(Firsttime)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+Program.Sub.UNLOAD.Start
+F.Intrinsic.Control.SetErrorHandler("UNLOAD_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!Con.Close
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("UNLOAD_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.UNLOAD.End
+
+Program.Sub.FirstTime.Start
+F.Intrinsic.Control.SetErrorHandler("FirstTime_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+
+V.Local.sSQL.Set("INSERT INTO GCG_3736_INVCNG SELECT MSTR.PART, MSTR.LOCATION, INV2.CODE_SOURCE, MSTR.BIN FROM V_INVENTORY_MSTR AS MSTR JOIN V_INVENTORY_MST2 AS INV2 ON MSTR.PART = INV2.PART AND MSTR.LOCATION = INV2.LOCATION ")
+F.ODBC.Connection!Con.Execute(V.Local.sSQL)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("FirstTime_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.FirstTime.End
+
+Program.Sub.CreateEmail.Start
+F.Intrinsic.Control.SetErrorHandler("CreateEmail_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.sSQL.Declare(String)
+V.Local.sBody.Declare(String)
+V.Local.sSender.Declare(String)
+V.Local.sEmails.Declare(String)
+V.Local.iUserID.Declare(Long)
+
+
+V.Local.sSQL.Set("SELECT MSTR.PART, MSTR.LOCATION, MSTR.DESCRIPTION, MSTR.PRODUCT_LINE, INV2.CODE_SOURCE, MSTR.BIN FROM V_INVENTORY_MSTR AS MSTR JOIN V_INVENTORY_MST2 AS INV2 ON MSTR.PART = INV2.PART AND MSTR.LOCATION = INV2.LOCATION JOIN GCG_3736_INVCNG AS GCG ON MSTR.PART = GCG.PART AND MSTR.LOCATION = GCG.LOCATION WHERE INV2.CODE_SOURCE <> GCG.CODE_SOURCE OR MSTR.BIN <> GCG.BIN ")
+'If BIN or Source are not the same as what is in the table then the info will show up.
+F.ODBC.Connection!Con.OpenLocalRecordsetRO("rstCheck",V.Local.sSQL)
+F.Intrinsic.Control.DoUntil(V.ODBC.Con!rstCheck.EOF,=,True)
+	F.Intrinsic.String.Build("{0}Part Number: {1}     Location: {2}     Description: {3}     Product Line: {4}     Source: {5}     Bin: {6}{7}",V.Local.sBody,V.ODBC.Con!rstCheck.FieldValTrim!PART,V.ODBC.Con!rstCheck.FieldValTrim!LOCATION,V.ODBC.Con!rstCheck.FieldValTrim!DESCRIPTION,V.ODBC.Con!rstCheck.FieldValTrim!PRODUCT_LINE,V.ODBC.Con!rstCheck.FieldValTrim!CODE_SOURCE,V.ODBC.Con!rstCheck.FieldValTrim!BIN,V.Ambient.NewLine,V.Local.sBody)
+	F.ODBC.Con!rstCheck.MoveNext
+F.Intrinsic.Control.Loop
+F.ODBC.Con!rstCheck.Close
+
+'we have looped through all of the changed values. now create the email to be sent out.
+'get user id
+F.Global.Security.GetUserId(V.Caller.User,V.Caller.CompanyCode,V.Local.iUserID)
+
+'get the users email address
+F.Global.Security.GetUserEmail(V.Caller.User,V.Local.sSender)
+F.Intrinsic.String.Build("{0}*!*",V.Local.sSender,V.Local.sSender)
+
+'get recipeients emails from custom table
+F.ODBC.Connection!Con.ExecuteAndReturn("SELECT EMAIL FROM GCG_3736_EMAIL_LIST",V.Local.sEmails)
+F.Intrinsic.String.Replace(V.Local.sEmails,"*!*","",V.Local.sEmails)
+F.Intrinsic.String.Replace(V.Local.sEmails,"#$#","@!@*!*",V.Local.sEmails)
+F.Intrinsic.Control.If(V.Local.sEmails.Left3,<>,"*!*")
+	F.Intrinsic.String.Build("*!*{0}",V.Local.sEmails,V.Local.sEmails)
+F.Intrinsic.Control.EndIf
+
+'send email
+F.Intrinsic.Control.If(V.Local.sBody,<>,"")
+	F.Intrinsic.String.Build("The Bin/Source has changed, this is the parts current status.{0}{0}{1}",V.Ambient.NewLine,V.Local.sBody,V.Local.sBody)
+	F.Global.Messaging.QueueMessage(V.Caller.CompanyCode,V.Local.iUserID,"GCG_3736","Inventory Part Bin/Source has changed",V.Local.sSender,V.Local.sEmails,V.Local.sBody)
+F.Intrinsic.Control.EndIf
+
+'Update the holding table to the up to date information
+F.ODBC.Connection!Con.Execute("UPDATE GCG_3736_INVCNG SET GCG.CODE_SOURCE = INV.CODE_SOURCE, GCG.BIN = MST.BIN FROM GCG_3736_INVCNG AS GCG INNER JOIN V_INVENTORY_MSTR AS MST ON GCG.PART = MST.PART AND GCG.LOCATION = MST.LOCATION INNER JOIN V_INVENTORY_MST2 AS INV ON GCG.PART = INV.PART AND GCG.LOCATION = INV.LOCATION WHERE GCG.CODE_SOURCE <> INV.CODE_SOURCE OR GCG.BIN <> MST.BIN")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("CreateEmail_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.CreateEmail.End
+
+Program.Sub.Comments.Start
+${$0$}$GCG_3736_INVCNG$}$SS1$}$5/10/2016
+${$3$}$0$}$$}$-1$}$-1$}$$}$1/1/1900$}$TABLE GCG_3736_INVCNG
+
+Inventory Part Bin/Source change email notification
+Program.Sub.Comments.End
+
