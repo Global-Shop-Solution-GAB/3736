@@ -1,0 +1,328 @@
+Program.Sub.ScreenSU.Start
+gui.SS_Form1..create
+gui.SS_Form1..caption("Inventory Change Email")
+gui.SS_Form1..size(3950,4860)
+gui.SS_Form1..minx(0)
+gui.SS_Form1..miny(0)
+gui.SS_Form1..position(0,0)
+gui.SS_Form1..event(unload,ss_form1_unload)
+gui.SS_Form1..alwaysontop(False)
+gui.SS_Form1..fontname("Arial")
+gui.SS_Form1..fontsize(8)
+gui.SS_Form1..forecolor(0)
+gui.SS_Form1..fontstyle(,,,,)
+gui.SS_Form1..BackColor(-2147483633)
+gui.SS_Form1..controlbox(True)
+gui.SS_Form1..maxbutton(False)
+gui.SS_Form1..minbutton(False)
+gui.SS_Form1..mousepointer(0)
+gui.SS_Form1..moveable(True)
+gui.SS_Form1..sizeable(False)
+gui.SS_Form1..ShowInTaskBar(True)
+gui.SS_Form1..titlebar(True)
+gui.SS_Form1.lbl_txtEmail.create(label,"Email",True,1800,200,1,100,135,True,0,Arial,8,-2147483633,0)
+gui.SS_Form1.lbl_txtEmail.defaultvalue("")
+gui.SS_Form1.lbl_txtEmail.controlgroup(0)
+gui.SS_Form1.txtEmail.create(textbox,"",True,1800,330,0,100,335,True,0,Arial,8,16777215,1)
+gui.SS_Form1.txtEmail.defaultvalue("")
+gui.SS_Form1.txtEmail.controlgroup(0)
+gui.SS_Form1.lbl_lvwEmails.create(label,"Email List",True,1800,200,1,100,835,True,0,Arial,8,-2147483633,0)
+gui.SS_Form1.lbl_lvwEmails.defaultvalue("")
+gui.SS_Form1.lbl_lvwEmails.controlgroup(0)
+gui.SS_Form1.lvwEmails.create(listview)
+gui.SS_Form1.lvwEmails.view(3)
+gui.SS_Form1.lvwEmails.addlistviewcolumn("Email",3200,0)
+gui.SS_Form1.lvwEmails.visible(True)
+gui.SS_Form1.lvwEmails.size(3600,2000)
+gui.SS_Form1.lvwEmails.zorder(0)
+gui.SS_Form1.lvwEmails.position(100,1035)
+gui.SS_Form1.lvwEmails.enabled(True)
+gui.SS_Form1.lvwEmails.fontname("Arial")
+gui.SS_Form1.lvwEmails.fontsize(8)
+gui.SS_Form1.lvwEmails.event(itemclick,lvwemails_itemclick)
+gui.SS_Form1.cmd_lvwEmailsAdd.create(button)
+gui.SS_Form1.cmd_lvwEmailsAdd.caption("Add")
+gui.SS_Form1.cmd_lvwEmailsAdd.visible(True)
+gui.SS_Form1.cmd_lvwEmailsAdd.size(1000,330)
+gui.SS_Form1.cmd_lvwEmailsAdd.zorder(0)
+gui.SS_Form1.cmd_lvwEmailsAdd.position(1985,335)
+gui.SS_Form1.cmd_lvwEmailsAdd.enabled(True)
+gui.SS_Form1.cmd_lvwEmailsAdd.fontname("Arial")
+gui.SS_Form1.cmd_lvwEmailsAdd.fontsize(8)
+gui.SS_Form1.cmd_lvwEmailsAdd.event(click,cmd_lvwemailsadd_click)
+gui.SS_Form1.cmd_lvwEmailsAdd.SetInternationalID(7600)
+gui.SS_Form1.cmd_lvwEmailsAdd.defaultvalue("")
+gui.SS_Form1.cmd_lvwEmailsAdd.controlgroup(0)
+gui.SS_Form1.cmd_lvwEmailsDelete.create(button)
+gui.SS_Form1.cmd_lvwEmailsDelete.caption("Delete")
+gui.SS_Form1.cmd_lvwEmailsDelete.visible(True)
+gui.SS_Form1.cmd_lvwEmailsDelete.size(1000,330)
+gui.SS_Form1.cmd_lvwEmailsDelete.zorder(0)
+gui.SS_Form1.cmd_lvwEmailsDelete.position(100,3120)
+gui.SS_Form1.cmd_lvwEmailsDelete.enabled(True)
+gui.SS_Form1.cmd_lvwEmailsDelete.fontname("Arial")
+gui.SS_Form1.cmd_lvwEmailsDelete.fontsize(8)
+gui.SS_Form1.cmd_lvwEmailsDelete.event(click,cmd_lvwemailsdelete_click)
+gui.SS_Form1.cmd_lvwEmailsDelete.SetInternationalID(171500)
+gui.SS_Form1.cmd_lvwEmailsDelete.defaultvalue("")
+gui.SS_Form1.cmd_lvwEmailsDelete.controlgroup(0)
+gui.SS_Form1.cmd_lvwEmailsClear.create(button)
+gui.SS_Form1.cmd_lvwEmailsClear.caption("Clear")
+gui.SS_Form1.cmd_lvwEmailsClear.visible(True)
+gui.SS_Form1.cmd_lvwEmailsClear.size(1000,330)
+gui.SS_Form1.cmd_lvwEmailsClear.zorder(0)
+gui.SS_Form1.cmd_lvwEmailsClear.position(1185,3120)
+gui.SS_Form1.cmd_lvwEmailsClear.enabled(True)
+gui.SS_Form1.cmd_lvwEmailsClear.fontname("Arial")
+gui.SS_Form1.cmd_lvwEmailsClear.fontsize(8)
+gui.SS_Form1.cmd_lvwEmailsClear.event(click,cmd_lvwemailsclear_click)
+gui.SS_Form1.cmd_lvwEmailsClear.SetInternationalID(106700)
+gui.SS_Form1.cmd_lvwEmailsClear.defaultvalue("")
+gui.SS_Form1.cmd_lvwEmailsClear.controlgroup(0)
+gui.SS_Form1.cmdSave.create(button)
+gui.SS_Form1.cmdSave.caption("Save")
+gui.SS_Form1.cmdSave.visible(True)
+gui.SS_Form1.cmdSave.size(1000,360)
+gui.SS_Form1.cmdSave.zorder(0)
+gui.SS_Form1.cmdSave.position(100,3775)
+gui.SS_Form1.cmdSave.enabled(True)
+gui.SS_Form1.cmdSave.fontname("Arial")
+gui.SS_Form1.cmdSave.fontsize(8)
+gui.SS_Form1.cmdSave.event(click,cmdsave_click)
+gui.SS_Form1.cmdSave.defaultvalue("")
+gui.SS_Form1.cmdSave.controlgroup(0)
+gui.SS_Form1.txtEmail.tabstop(true)
+gui.SS_Form1.txtEmail.tabindex(1)
+gui.SS_Form1.cmd_lvwEmailsAdd.tabstop(true)
+gui.SS_Form1.cmd_lvwEmailsAdd.tabindex(2)
+gui.SS_Form1.lvwEmails.tabstop(true)
+gui.SS_Form1.lvwEmails.tabindex(3)
+gui.SS_Form1.cmdSave.tabstop(true)
+gui.SS_Form1.cmdSave.tabindex(4)
+
+
+Program.Sub.ScreenSU.End
+
+Program.Sub.Preflight.Start
+
+Variable.Global.sKey.Declare(String)
+Variable.Global.iOrd.Declare(Long,-1)
+Program.Sub.Preflight.End
+
+Program.Sub.Main.Start
+F.Intrinsic.Control.SetErrorHandler("Main_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!Con.OpenConnection(V.Ambient.PDSN,V.Ambient.PUser,V.Ambient.PPass)
+
+'load existing emails into the list view
+F.Intrinsic.Control.CallSub(Loademails)
+
+Gui.SS_Form1..Show
+
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("Main_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.Main.End
+
+program.sub.ss_form1_unload.start
+F.Intrinsic.Control.SetErrorHandler("ss_form1_unload_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+f.ODBC.Connection!Con.Close
+F.Intrinsic.Control.End
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("ss_form1_unload_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.End
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.ss_form1_unload.end
+
+Program.Sub.LoadEmails.Start
+F.Intrinsic.Control.SetErrorHandler("LoadEmails_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+F.ODBC.Connection!Con.OpenLocalRecordsetRO("rstEmail","SELECT EMAIL FROM GCG_3736_EMAIL_LIST ORDER BY EMAIL ASC")
+F.Intrinsic.Control.DoUntil(V.ODBC.Con!rstEmail.EOF,=,True)
+	'add emails until no more
+	Gui.SS_Form1.lvwEmails.AddListItem(V.ODBC.Con!rstEmail.FieldValTrim!EMAIL,V.ODBC.Con!rstEmail.FieldValTrim!EMAIL)
+	F.ODBC.Con!rstEmail.MoveNext
+F.Intrinsic.Control.Loop
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("LoadEmails_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+Program.Sub.LoadEmails.End
+
+program.sub.cmd_lvwemailsadd_click.start
+F.Intrinsic.Control.SetErrorHandler("cmd_lvwemailsadd_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.iOrd.Declare(Long)
+
+Gui.SS_Form1.lvwEmails.RetrieveItemOrdinal(V.Screen.SS_Form1!txtEmail.Text,V.Local.iOrd)
+'F.Intrinsic.Control.If(V.Screen.SS_Form1!txtEmail.Text,<>,"","OR",V.Screen.SS_Form1!txtEmail.Text,<>,V.Global.sKey)
+F.Intrinsic.Control.If(V.Local.iOrd,=,-1,"AND",V.Screen.SS_Form1!txtEmail.Text,<>,"")
+	Gui.SS_Form1.lvwEmails.AddListItem(V.Screen.SS_Form1!txtEmail.Text,V.Screen.SS_Form1!txtEmail.Text)
+	F.Intrinsic.Control.CallSub(Cmd_lvwemailsclear_click)
+F.Intrinsic.Control.Else
+	F.Intrinsic.Control.CallSub(Cmd_lvwemailsclear_click)
+F.Intrinsic.Control.EndIf
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmd_lvwemailsadd_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmd_lvwemailsadd_click.end
+
+program.sub.cmd_lvwemailsdelete_click.start
+F.Intrinsic.Control.SetErrorHandler("cmd_lvwemailsdelete_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+'Remove the item from the view
+Gui.SS_Form1.lvwEmails.RemoveItem(V.Global.sKey)
+
+'clear text box
+F.Intrinsic.Control.CallSub(Cmd_lvwemailsclear_click)
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmd_lvwemailsdelete_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmd_lvwemailsdelete_click.end
+
+program.sub.cmd_lvwemailsclear_click.start
+F.Intrinsic.Control.SetErrorHandler("cmd_lvwemailsclear_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+Gui.SS_Form1.txtEmail.Text("")
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmd_lvwemailsclear_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmd_lvwemailsclear_click.end
+
+program.sub.cmdsave_click.start
+F.Intrinsic.Control.SetErrorHandler("cmdsave_click_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+V.Local.iCount.Declare(Long)
+V.Local.sRet.Declare(String)
+
+'delete email list and then add in the emails from the screen
+F.ODBC.Connection!Con.Execute("DELETE FROM GCG_3736_EMAIL_LIST")
+
+F.ODBC.Connection!Con.OpenLocalRecordsetRW("rstUpdate","SELECT EMAIL FROM GCG_3736_EMAIL_LIST")
+
+Gui.SS_Form1.lvwEmails.RetrieveAllListItems(V.Local.sRet)
+F.Intrinsic.String.Split(V.Local.sRet,"*!*",V.Local.sRet)
+F.Intrinsic.Control.For(V.Local.iCount,V.Local.sRet.LBound,V.Local.sRet.UBound,1)
+	F.ODBC.Con!rstUpdate.AddNew
+	F.ODBC.Con!rstUpdate.Set!EMAIL(V.Local.sRet(v.Local.iCount))
+	F.ODBC.Con!rstUpdate.Update
+F.Intrinsic.Control.Next(V.Local.iCount)
+F.ODBC.Con!rstUpdate.Close
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("cmdsave_click_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.cmdsave_click.end
+
+program.sub.lvwemails_itemclick.start
+F.Intrinsic.Control.SetErrorHandler("lvwemails_itemclick_Err")
+F.Intrinsic.Control.ClearErrors
+
+V.Local.sError.Declare(String)
+
+'get the item key
+Gui.SS_Form1.lvwEmails.RetrieveSelectedListitems(V.Global.sKey)
+
+'get the item ordinal
+Gui.SS_Form1.lvwEmails.RetrieveItemOrdinal(V.Global.sKey,V.Global.iOrd)
+
+'set the line of text to textbox
+Gui.SS_Form1.txtEmail.Text(V.Screen.SS_Form1!lvwEmails.ListItemText(v.Global.iOrd))
+
+
+F.Intrinsic.Control.ExitSub
+
+F.Intrinsic.Control.Label("lvwemails_itemclick_Err")
+F.Intrinsic.Control.If(V.Ambient.ErrorNumber,<>,0)
+	Function.Intrinsic.String.Concat("Project: GCG_3736_INVCNG_MAINT.gas",V.Ambient.Newline,V.Ambient.Newline,"Subroutine: ",V.Ambient.CurrentSubroutine,V.Ambient.NewLine,"Error Occurred ",V.Ambient.ErrorNumber," with description ",V.Ambient.ErrorDescription,V.Local.sError)
+	F.Intrinsic.UI.Msgbox(V.Local.sError)
+	F.Intrinsic.Control.CallSub(Ss_form1_unload)
+Function.Intrinsic.Control.EndIf
+
+
+program.sub.lvwemails_itemclick.end
+
+Program.Sub.Comments.Start
+${$0$}$GCG_3736_INVCNG_MAINT$}$SS1$}$5/9/2016
+Program.Sub.Comments.End
+Program.Sub.ScreenSS.Start
+SS_Form1{{CAPTION::Inventory Change Email
+SS_Form1.CTRL{{NAME::txtEmail\\TYPE::2\\CAPTION::Email\\RANGE::lvwEmails\\TABSTOP::1\\GROUP::1\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::lvwEmails\\TYPE::7\\CAPTION::Email List\\TABSTOP::2\\GROUP::2\\BROWSER::0\\SIZE::1
+SS_Form1.CTRL{{NAME::cmdSave\\TYPE::5\\CAPTION::Save\\TABSTOP::3\\GROUP::-1\\BROWSER::0\\SIZE::1
+
+Program.Sub.ScreenSS.End
+
